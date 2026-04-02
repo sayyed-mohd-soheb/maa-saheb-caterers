@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Pay ₹500</h2>
+    <button id="rzp-button1">Pay Now</button>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+    var options = {
+        "key": "{{ razorpay_key_id }}", 
+        "amount": "{{ amount }}", 
+        "currency": "INR",
+        "name": "Mera Project",
+        "description": "Test Transaction",
+        "order_id": "{{ order_id }}", 
+        "handler": function (response){
+            // Payment success hone ke baad backend ko batana
+            window.location.href = `/payment/success/?payment_id=${response.razorpay_payment_id}&order_id=${response.razorpay_order_id}&signature=${response.razorpay_signature}`;
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    document.getElementById('rzp-button1').onclick = function(e){
+        rzp1.open();
+        e.preventDefault();
+    }
+    </script>
+</body>
+</html>

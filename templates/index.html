@@ -1,0 +1,324 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Maa-Saheb Caterers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  
+  <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+</head>
+
+<body>
+{% csrf_token %}
+<header class="top-header">
+  <div class="header-brand">
+    <div class="header-logo">🍛</div>
+    <h1>Maa-Saheb Caterers<small>Authentic · Halal · With Love</small></h1>
+  </div>
+</header>
+
+{% comment %} image container -------------- {% endcomment %}
+<section id="home" class="section active">
+  <div class="hero-banner">
+    <img src="{% static 'images/img1.jpg' %}" alt="Catering Image">
+  </div>
+
+  <div class="feed-container" id="feedContainer"></div>
+</section>
+
+
+{% comment %} menu sections {% endcomment %}
+<section id="menu" class="section">
+  <div class="menu-header">
+    <h2>Our Menu</h2>
+    {% comment %} banner boxess {% endcomment %}
+    <div class="menu-banner-section">
+      <div class="banner-box1">
+        <img src="{%static 'images/BAN1.jpg'%}" alt="banner-box1">
+      </div>
+      <div class="banner-box2">
+        <img src="{% static "images/BAN2.jpg" %}" alt="banner-box2" >
+      </div>
+    </div>
+  </div>
+
+
+  <div class="menu-body" id="menuBody"></div>
+</section>
+ 
+
+{% comment %} bottom sections {% endcomment %}
+<nav class="bottom-nav">
+  <button class="nav-item active" onclick="showSection('home',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Home
+  </button>
+  <button class="nav-item" onclick="showSection('menu',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    Menu
+  </button>
+  <button class="nav-item contact-nav" onclick="openContactSheet()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V19a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3 4.18 2 2 0 0 1 5 2h2.09a2 2 0 0 1 2 1.72c.13 1 .37 1.97.72 2.9a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.18-1.18a2 2 0 0 1 2.11-.45c.93.35 1.9.59 2.9.72A2 2 0 0 1 22 16.92z"/></svg>
+    Contact
+  </button>
+  <button class="nav-item" onclick="showSection('about',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    About
+  </button>
+</nav>
+ 
+<button class="fab" id="fabBtn" onclick="openPostSheet()">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+</button>
+ 
+
+{% comment %} image posting {% endcomment %}
+<div class="overlay" id="postOverlay" onclick="bgClose(event,'postOverlay',resetPost)">
+  <div class="sheet" id="postSheet">
+    <div class="sheet-handle"></div>
+    <h3>Share a Moment 📸</h3>
+    <input type="file" id="fileInput" accept="image/*,video/*" onchange="previewFile(this)"/>
+    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+      <div class="uz-icon">🖼️</div>
+      <p><strong>Tap to upload</strong> a photo or video</p>
+      <p style="margin-top:4px;font-size:.73rem;">JPG, PNG, MP4 supported</p>
+    </div>
+    <div class="preview-wrap" id="previewWrap">
+      <img id="previewImg" src="" alt="" style="display:none"/>
+      <video id="previewVid" src="" controls style="display:none"></video>
+      <button class="rm-preview" onclick="removePreview()">✕</button>
+    </div>
+    <textarea class="caption-input" id="captionInput" rows="3" placeholder="Write a caption... 🍛"></textarea>
+    <div class="sheet-actions">
+      <button class="btn-cancel" onclick="closePostSheet()">Cancel</button>
+      <button class="btn-post" onclick="submitPost()">Post Now ✨</button>
+    </div>
+  </div>
+</div>
+
+
+{% comment %} comment overlay {% endcomment %}
+<div class="overlay" id="commentOverlay" onclick="bgClose(event,'commentOverlay',null)">
+  <div class="sheet" id="commentSheet">
+    <div class="sheet-handle"></div>
+    <h4 style="text-align:center; margin-bottom:15px;">Comments 💬</h4>
+    
+    <div id="commentsList" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px; font-size: 0.85rem;">
+      <p style="color:var(--muted); text-align:center;">No comments yet. Be the first!</p>
+    </div>
+
+    <div class="comment-input-wrap">
+      <input type="hidden" id="currentPostId">
+      <input type="text" id="modalCommentInput" placeholder="Add a comment... 🍛">
+      <button type="button" class="cmt-post-btn" onclick="submitModalComment()">Comment</button>
+    </div>
+  </div>
+</div>
+ 
+<div class="overlay" id="shareOverlay" onclick="bgClose(event,'shareOverlay',null)">
+  <div class="sheet" id="shareSheet">
+    <div class="sheet-handle"></div>
+    <h4>Share this post</h4>
+    <div class="share-grid">
+      <button class="share-opt" onclick="shareVia('whatsapp')">
+        <div class="si si-wa">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+        <span>WhatsApp</span>
+      </button>
+
+      <button class="share-opt" onclick="shareVia('instagram')">
+        <div class="si si-ig">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E1306C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </div>
+        <span>Instagram</span>
+      </button>
+
+      <button class="share-opt" onclick="shareVia('facebook')">
+        <div class="si si-fb">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </div>
+        <span>Facebook</span>
+      </button>
+
+      <button class="share-opt" onclick="shareVia('twitter')">
+        <div class="si si-tw">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#000000"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </div>
+        <span>X</span>
+      </button>
+
+      <button class="share-opt" onclick="shareVia('sms')">
+        <div class="si si-sms">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00BCD4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </div>
+        <span>Message</span>
+      </button>
+
+      <button class="share-opt" onclick="shareVia('email')">
+        <div class="si si-mail">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF9800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        </div>
+        <span>Email</span>
+      </button>
+
+      <button class="share-opt" onclick="shareVia('copy')">
+        <div class="si si-copy">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8A6A52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+        </div>
+        <span>Copy Link</span>
+      </button>
+
+      <button class="share-opt" onclick="shareVia('more')">
+        <div class="si si-more">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A0A00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+        </div>
+        <span>More</span>
+      </button>
+    </div>
+    <button class="share-cancel" onclick="close_('shareOverlay')">Cancel</button>
+  </div>
+</div>
+
+{% comment %} about us  {% endcomment %}
+<section id="about" class="section">
+  <div class="about-hero">
+    <div class="av">🍽️</div>
+    <h2>Maa-Saheb Caterers</h2>
+    <p>From our kitchen to your table — and beyond</p>
+  </div>
+  <div class="about-body">
+    <div class="niyaz-card">
+      <div class="heart">🤲</div>
+      <h3>Niyaz — Feeding the Needy</h3>
+      <p>With every order, a portion of our food is set aside as <strong>Niyaz</strong> — distributing meals to the less fortunate in our community. Your order is not just a meal; it is a small act of charity.</p>
+    </div>
+    <div class="about-card">
+      <h3>🏠 Who We Are</h3>
+      <p>Maa-Shaeb Caterers was founded to bring home-cooked warmth to weddings, gatherings, and events. Every dish is prepared fresh with hand-picked spices and generations-old recipes passed down with love.</p>
+    </div>
+    <div class="about-card">
+      <h3>✅ Our Promise</h3>
+      <p>100% Halal · No preservatives · Delivered fresh · Custom menus available · Hygienic preparation by certified staff</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat-box"><div class="num">500+</div><div class="lbl">Events Catered</div></div>
+      <div class="stat-box"><div class="num">2K+</div><div class="lbl">Meals Donated</div></div>
+      <div class="stat-box"><div class="num">12+</div><div class="lbl">Years Serving</div></div>
+    </div>
+  </div>
+</section>
+
+
+{% comment %} contact us  {% endcomment %}
+{% csrf_token %}
+<div class="overlay" id="contactOverlay" onclick="bgClose(event,'contactOverlay',null)">
+  <div class="sheet" id="contactSheet">
+    <div class="sheet-handle"></div>
+    <h3>Contact Us 🤝</h3>
+    <p class="contact-sub">We'd love to hear from you. Fill in your details and we'll get back to you soon.</p>
+    <div class="contact-field">
+      <label>NAME</label>
+      <input type="text" id="contactName" placeholder="Your full name" autocomplete="name"/>
+    </div>
+    <div class="contact-field">
+      <label>PHONE NUMBER</label>
+      <input type="tel" id="contactPhone" placeholder="Your phone number" autocomplete="tel"/>
+    </div>
+    <div class="contact-field">
+      <label>MESSAGE</label>
+      <textarea id="contactMessage" rows="4" placeholder="Tell us about your event or enquiry..."></textarea>
+    </div>
+    <button class="btn-send" onclick="submitContact()">Send Message 📨</button>
+  </div>
+</div>
+
+
+{% comment %} payment get way form {% endcomment %}
+<div id="orderOverlay" class="overlay" onclick="bgClose(event, 'orderOverlay')">
+    <div class="order-sheet">
+        
+        <div id="formSection">
+            <div class="sheet-header">
+                <span id="orderItemPrice" class="modal-price"></span>
+                <h2 id="orderItemName" class="modal-title"></h2>
+            </div>
+            
+            <div class="order-form">
+                <label>Enter your Name:</label>
+                <input type="text" id="custName" placeholder="Enter Full Name" required>
+                
+                <label>WhatsApp Number:</label>
+                <input type="tel" id="custPhone" placeholder="Enter WhatsApp No." required>
+                
+                <div style="display:none;" id="finalAmount"></div>
+
+                <button class="pay-btn" onclick="handlePaymentClick()">Pay Now</button>
+            </div>
+        </div>
+
+        <div id="qrSection" style="display:none; text-align:center;">
+            <h3 class="modal-title">Scan & Pay ₹<span id="qrAmountDisplay"></span></h3>
+            
+            <div class="qr-box">
+                <img src="{%static 'images/qr.jpg'%}" alt="Maa-Saheb QR" class="qr-img">
+            </div>
+            
+            <p class="qr-instruction">
+              1. Scan this QR code using any UPI App (GPay, PhonePe, Paytm).<br>
+              2. After payment, click the button below to send the <b>Screenshot</b> for verification.
+            </p>
+    
+    <button class="wa-confirm-btn" onclick="redirectToWhatsApp()">
+                I have Paid. Confirm on WhatsApp ✅
+            </button>
+            
+            <button class="back-btn" onclick="backToForm()">⬅ Back to Details</button>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+  let posts = [
+    {% for post in db_posts %}
+    {
+      id: {{ post.id }},
+      {% if post.media %}
+      url: "{{ post.media.url|escapejs }}",
+      isVideo: "{{ post.media.name|lower }}".endsWith(".mp4") || "{{ post.media.name|lower }}".endsWith(".mov") || "{{ post.media.name|lower }}".endsWith(".avi"),
+      {% else %}
+      url: "",
+      isVideo: false,
+      {% endif %}
+      caption: "{{ post.caption|escapejs }}",
+      tags: "", 
+      likes: {{ post.likes_count|default:0 }},
+      liked: false,
+      
+      // FIX: Naam wapas 'comments' kar diya hai taaki undefined na aaye
+      comments: {{ post.comments.count|default:0 }},
+      
+      // FIX: Asli comments ki list
+      comments_list: [
+        {% for c in post.comments.all %}
+        {
+          text: "{{ c.text|escapejs }}",
+          time: "{{ c.created_at|timesince }} ago"
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+      ],
+      
+      time: "{{ post.created_at|timesince }} ago"
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ];
+</script>
+
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,576 @@
+:root {
+  --orange: #F26419;
+  --red:    #C1121F;
+  --cream:  #FFF8F0;
+  --white:  #FFFFFF;
+  --dark:   #1A0A00;
+  --muted:  #8A6A52;
+  --border: #F0E0D0;
+  --nav-h:  58px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+*, *::before, *::after { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+  -webkit-tap-highlight-color: transparent; /* YEH JADUI LINE BLUE BOX GAYAB KAR DEGI */
+}
+
+/* Aur buttons/links ko aur smooth feel dene ke liye ye bhi add kar do */
+button, a {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+/* ══════════════════════════════
+    TOP HEADER
+══════════════════════════════ */
+.top-header {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.header-brand { display: flex; align-items: center; gap: 9px; }
+.header-logo {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--red), var(--orange));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0;
+}
+.header-brand h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.22rem; color: var(--red); line-height: 1.1;
+}
+.header-brand small {
+  display: block; font-size: .57rem; color: var(--muted);
+  font-family: 'Nunito', sans-serif; font-weight: 500;
+  letter-spacing: .5px; text-transform: uppercase;
+}
+.header-actions { display: flex; gap: 8px; }
+.hdr-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--dark); padding: 5px; border-radius: 8px;
+  transition: background .15s;
+}
+.hdr-btn:hover { background: var(--cream); }
+
+/* ── SECTIONS ── */
+.section { display: none; }
+.section.active { display: block; }
+
+/* ══════════════════════════════
+    HOME — INSTAGRAM FEED
+══════════════════════════════ */
+#home { background: #FAF5F0; }
+.feed-container { 
+  padding: 6px 0 100px 0; /* <--- YAHAN CHANGE HAI: Niche 100px ka extra space de diya */
+}
+
+/* ── HERO IMAGE BANNER ── */
+.hero-banner {
+  width: 100%;
+  /* background: #FAF5F0;  */
+  background:  #FCF6BA;
+  padding: 20px 24px; 
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-banner img {
+  width: 100%;
+  max-width: 900px;
+  height: auto !important; 
+  object-fit: contain; 
+  display: block;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* POST CARD */
+.post-card {
+  background: var(--white);
+  margin-bottom: 8px;
+  animation: fadeUp .4s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.post-header {
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.post-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--red), var(--orange));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0;
+}
+.post-meta { flex: 1; }
+.post-meta .uname { font-size: .86rem; font-weight: 700; }
+.post-meta .utime { font-size: .71rem; color: var(--muted); }
+.post-more { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 1.2rem; padding: 4px; }
+
+.post-media {
+  width: 100%; aspect-ratio: 1/1; overflow: hidden;
+  background: #f0e8df; position: relative;
+}
+.post-media img, .post-media video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.heart-burst {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%) scale(0);
+  font-size: 5rem; pointer-events: none;
+  opacity: 0; transition: transform .15s ease, opacity .4s ease .15s;
+}
+.heart-burst.pop { transform: translate(-50%,-50%) scale(1.2); opacity: 1; }
+
+.post-actions {
+  padding: 8px 14px 4px !important; /* !important lagana zaroori hai side space ke liye */
+  display: flex; align-items: center; gap: 14px;
+}
+.action-btn {
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; gap: 5px;
+  color: var(--dark); font-size: .82rem; font-weight: 600;
+  padding: 4px 0; transition: color .15s; font-family: 'Nunito', sans-serif;
+}
+.action-btn svg { width: 23px; height: 23px; transition: transform .2s; }
+.action-btn:hover svg { transform: scale(1.15); }
+.action-btn.liked { color: var(--red); }
+.action-btn.liked svg { fill: var(--red); stroke: var(--red); }
+.share-btn { margin-left: auto; }
+
+.post-caption { 
+  padding: 4px 14px 10px !important; /* Username aur caption ke space ke liye !important */
+}
+.post-caption .uname2 { font-size: .85rem; font-weight: 700; margin-right: 4px; }
+.post-caption .captext { font-size: .84rem; line-height: 1.5; }
+.post-caption .tags { color: var(--orange); font-size: .8rem; margin-top: 3px; }
+
+/* ══════════════════════════════
+    ABOUT
+══════════════════════════════ */
+.about-hero {
+  background: linear-gradient(160deg, var(--red) 0%, var(--orange) 100%);
+  color: #fff; padding: 48px 24px 36px; text-align: center;
+}
+.about-hero .av {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(255,255,255,.2);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 2.2rem; margin-bottom: 12px; border: 3px solid rgba(255,255,255,.4);
+}
+.about-hero h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; }
+.about-hero p  { font-size: .88rem; opacity: .85; margin-top: 6px; }
+.about-body { padding: 24px 16px; }
+.about-card {
+  background: var(--white); border-radius: 16px; padding: 20px;
+  margin-bottom: 14px; box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  border-left: 4px solid var(--orange);
+}
+.about-card h3 { color: var(--red); margin-bottom: 7px; font-size: 1rem; }
+.about-card p  { font-size: .85rem; color: var(--muted); line-height: 1.7; }
+.niyaz-card {
+  background: linear-gradient(135deg,#fff5ee,#ffe8d6);
+  border-radius: 16px; padding: 22px; text-align: center;
+  border: 2px dashed var(--orange); margin-bottom: 14px;
+}
+.niyaz-card .heart { font-size: 2.4rem; margin-bottom: 8px; }
+.niyaz-card h3 { color: var(--red); font-size: 1.15rem; margin-bottom: 7px; }
+.niyaz-card p  { font-size: .84rem; color: var(--muted); line-height: 1.7; }
+.stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 4px; }
+.stat-box { background: var(--orange); color: #fff; border-radius: 14px; padding: 16px 8px; text-align: center; }
+.stat-box .num { font-size: 1.5rem; font-weight: 700; }
+.stat-box .lbl { font-size: .68rem; opacity: .9; margin-top: 2px; }
+
+/* ══════════════════════════════
+    BOTTOM NAV
+══════════════════════════════ */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: calc(var(--nav-h) + var(--safe-bottom));
+  background: var(--white); border-top: 1px solid var(--border);
+  display: flex; z-index: 300;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.08);
+  padding-bottom: var(--safe-bottom);
+}
+.nav-item {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 3px;
+  cursor: pointer; color: var(--muted);
+  font-size: .65rem; font-weight: 600; letter-spacing: .3px;
+  background: none; border: none; transition: color .2s;
+  font-family: 'Nunito', sans-serif;
+}
+.nav-item svg { width: 22px; height: 22px; transition: transform .2s; }
+.nav-item.active { color: var(--orange); }
+.nav-item.active svg { transform: scale(1.15); }
+
+/* ── CONTACT US NAV ITEM ── */
+.nav-item.contact-nav { color: var(--red); }
+.nav-item.contact-nav svg { stroke: var(--red); }
+.nav-item.contact-nav:hover { color: var(--orange); }
+
+/* ══════════════════════════════
+    FAB (UPLOAD BUTTON)
+══════════════════════════════ */
+.fab {
+  position: fixed;
+  bottom: calc(var(--nav-h) + var(--safe-bottom) + 16px);
+  right: 20px; /* 'left: 20px' ko hata kar 'right: 20px' kar diya */
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, var(--red), var(--orange));
+  border: none; border-radius: 50%; color: #fff;
+  cursor: pointer; z-index: 250;
+  box-shadow: 0 6px 20px rgba(242,100,25,.45);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .2s, box-shadow .2s;
+}
+.fab:hover { transform: scale(1.08); box-shadow: 0 8px 28px rgba(242,100,25,.55); }
+.fab:active { transform: scale(.94); }
+
+/* Aur sabse niche wale media query se purana FAB rule hata dena */
+/* @media (min-width: 480px) { .fab { left: auto; right: 20px; } } <- Ise delete kar do */
+
+/* ══════════════════════════════
+    BOTTOM SHEET BASE
+══════════════════════════════ */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(26,10,0,.55); z-index: 400;
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .25s;
+}
+.overlay.open { opacity: 1; pointer-events: all; }
+.sheet {
+  background: var(--white); width: 100%; max-width: 480px;
+  border-radius: 22px 22px 0 0;
+  padding: 18px 20px 36px;
+  transform: translateY(100%);
+  transition: transform .3s cubic-bezier(.32,0,.67,0);
+}
+.overlay.open .sheet { transform: translateY(0); transition-timing-function: cubic-bezier(.33,1,.68,1); }
+.sheet-handle { width: 36px; height: 4px; border-radius: 2px; background: #ddd; margin: 0 auto 16px; }
+
+/* ══════════════════════════════
+    CREATE POST SHEET
+══════════════════════════════ */
+#postSheet h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--red); margin-bottom: 16px; text-align: center; }
+.upload-zone {
+  border: 2px dashed var(--border); border-radius: 14px;
+  padding: 28px 20px; text-align: center; margin-bottom: 14px;
+  cursor: pointer; background: var(--cream);
+  transition: border-color .2s, background .2s;
+}
+.upload-zone:hover { border-color: var(--orange); background: #fff5ee; }
+.upload-zone .uz-icon { font-size: 2.2rem; margin-bottom: 8px; }
+.upload-zone p { font-size: .82rem; color: var(--muted); }
+.upload-zone strong { color: var(--orange); }
+#fileInput { display: none; }
+.preview-wrap {
+  display: none; position: relative; border-radius: 14px;
+  overflow: hidden; margin-bottom: 14px; aspect-ratio: 1; background: #000;
+}
+.preview-wrap img, .preview-wrap video { width: 100%; height: 100%; object-fit: cover; }
+.rm-preview {
+  position: absolute; top: 8px; right: 8px;
+  background: rgba(0,0,0,.6); color: #fff; border: none;
+  border-radius: 50%; width: 28px; height: 28px; cursor: pointer;
+  font-size: .85rem; display: flex; align-items: center; justify-content: center;
+}
+textarea.caption-input {
+  width: 100%; border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 12px; font-family: 'Nunito', sans-serif; font-size: .88rem;
+  resize: none; outline: none; color: var(--dark); background: var(--cream);
+  line-height: 1.5; transition: border-color .2s;
+}
+textarea.caption-input:focus { border-color: var(--orange); background: #fff; }
+.sheet-actions { display: flex; gap: 10px; margin-top: 14px; }
+.btn-cancel {
+  flex: 1; background: var(--cream); color: var(--muted);
+  border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 13px; font-size: .88rem; font-weight: 600;
+  cursor: pointer; font-family: 'Nunito', sans-serif;
+}
+.btn-post {
+  flex: 2; background: linear-gradient(135deg, var(--orange), var(--red));
+  color: #fff; border: none; border-radius: 12px;
+  padding: 13px; font-size: .88rem; font-weight: 700;
+  cursor: pointer; font-family: 'Nunito', sans-serif; transition: opacity .2s;
+}
+.btn-post:hover { opacity: .9; }
+
+/* ══════════════════════════════
+    SHARE SHEET
+══════════════════════════════ */
+#shareOverlay { z-index: 450; }
+#shareSheet h4 { text-align: center; font-size: .95rem; font-weight: 700; margin-bottom: 18px; }
+.share-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px 8px; }
+.share-opt {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  cursor: pointer; border: none; background: none; font-family: 'Nunito', sans-serif;
+}
+.si {
+  width: 54px; height: 54px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; transition: transform .15s;
+}
+.share-opt:hover .si { transform: scale(1.1); }
+.share-opt span { font-size: .7rem; color: var(--muted); font-weight: 600; }
+.si-wa   { background: #e7fde9; }
+.si-ig   { background: linear-gradient(135deg,#fde0f5,#fce5d2); }
+.si-fb   { background: #e8f0fe; }
+.si-tw   { background: #e8f5fd; }
+.si-sms  { background: #e0f7fa; }
+.si-mail { background: #fff3e0; }
+.si-copy { background: var(--cream); }
+.si-more { background: #f0f0f0; }
+.share-cancel {
+  width: 100%; margin-top: 16px; padding: 13px;
+  background: var(--cream); border: none; border-radius: 14px;
+  font-size: .88rem; font-weight: 700; color: var(--muted);
+  cursor: pointer; font-family: 'Nunito', sans-serif;
+}
+
+/* ══════════════════════════════
+    CONTACT SHEET
+══════════════════════════════ */
+#contactSheet h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem; color: var(--red);
+  margin-bottom: 6px; text-align: center;
+}
+#contactSheet .contact-sub {
+  text-align: center; font-size: .78rem; color: var(--muted);
+  margin-bottom: 20px;
+}
+.contact-field {
+  margin-bottom: 14px;
+}
+.contact-field label {
+  display: block; font-size: .78rem; font-weight: 700;
+  color: var(--muted); margin-bottom: 5px; letter-spacing: .3px;
+}
+.contact-field input,
+.contact-field textarea {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .88rem;
+  color: var(--dark);
+  background: var(--cream);
+  outline: none;
+  transition: border-color .2s, background .2s;
+}
+.contact-field input:focus,
+.contact-field textarea:focus {
+  border-color: var(--orange);
+  background: var(--white);
+}
+.contact-field textarea {
+  resize: none;
+  line-height: 1.5;
+}
+.btn-send {
+  width: 100%;
+  background: linear-gradient(135deg, var(--orange), var(--red));
+  color: #fff; border: none; border-radius: 12px;
+  padding: 14px; font-size: .92rem; font-weight: 700;
+  cursor: pointer; font-family: 'Nunito', sans-serif;
+  margin-top: 4px; transition: opacity .2s;
+}
+.btn-send:hover { opacity: .9; }
+.btn-send:active { opacity: .8; }
+
+
+@media (min-width: 768px) {
+  #home .feed-container { max-width: 480px; margin: 0 auto; }
+  .menu-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+  .cat-label { grid-column: 1/-1; }
+  
+}
+
+/* ══════════════════════════════
+    COMMENTS SECTION
+══════════════════════════════ */
+.comment-input-wrap {
+  display: flex;
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  gap: 8px;
+}
+.comment-input-wrap input {
+  flex: 1;
+  border: none;
+  background: none;
+  font-size: 0.85rem;
+  outline: none;
+}
+.cmt-post-btn {
+  background: none;
+  border: none;
+  color: var(--orange);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.feed-video {
+    cursor: pointer; /* Video clickable dikhega */
+}
+
+/* ══════════════════════════════
+    MENU SECTION
+══════════════════════════════ */
+.menu-header {
+  /* background: #f4f4f4;  */
+  background:  #FCF6BA;
+  color: #E5C287;      
+  padding: 50px 24px;
+  text-align: center;
+  border-bottom: 3px solid #E5C287; 
+  box-shadow: inset 0 0 100px rgba(0,0,0,0.2); 
+}
+
+.menu-header h2 { 
+  font-family: 'Cormorant Garamond', serif; 
+  font-size: 2.4rem; 
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.menu-header p { 
+  color: #FFFFFF; 
+  opacity: 0.9; 
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+.menu-body { padding: 16px; }
+.cat-label {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.15rem;
+  color: var(--red); margin: 20px 0 10px;
+  padding-left: 10px; border-left: 3px solid var(--orange);
+}
+.menu-card {
+  background: var(--white); border-radius: 14px;
+  overflow: hidden; display: flex; align-items: center; gap: 12px;
+  margin-bottom: 12px; box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  transition: transform .2s;
+}
+.menu-card:active { transform: scale(.98); }
+.menu-card img { width: 95px; height: 95px; object-fit: cover; flex-shrink: 0; }
+.mci { flex: 1; padding: 10px 0; }
+.mci h3 { font-size: .92rem; margin-bottom: 3px; }
+.mci p  { font-size: .75rem; color: var(--muted); line-height: 1.5; }
+.mci .price { display: inline-block; margin-top: 5px; background: #fff0e6; color: var(--orange); font-weight: 700; font-size: .8rem; padding: 2px 10px; border-radius: 20px; }
+.mcr { padding-right: 12px; }
+.order-btn {
+  background: var(--orange); color: #fff; border: none;
+  border-radius: 10px; padding: 9px 12px;
+  font-size: .77rem; font-weight: 700; cursor: pointer;
+  font-family: 'Nunito', sans-serif; white-space: nowrap;
+  transition: background .2s;
+}
+.order-btn:hover { background: var(--red); }
+
+/* banner boxess */
+.menu-banner-section {
+    display: flex;
+    gap: 20px; 
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    max-width: 1000px; 
+    margin: 0 auto; 
+}
+
+.banner-box1, .banner-box2 {
+    flex: 1;
+    width: 100%;
+}
+
+.banner-box1 img, .banner-box2 img {
+    width: 100%; 
+    height: auto; 
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+    display: block;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .menu-banner-section {
+        flex-direction: column; 
+        gap: 25px; 
+        padding: 15px 20px;
+    }
+    
+    .banner-box1, .banner-box2 {
+        width: 100%;
+        max-width: 400px; 
+    }
+}
+
+/* ══════════════════════════════
+    PAYMENT GATEWAY FORM 
+══════════════════════════════ */
+/* Yahan se purana display:none wala overlay hata diya hai aur sirf orderOverlay ko target kiya hai */
+#orderOverlay {
+    align-items: center; 
+    z-index: 1000;
+}
+
+.order-sheet {
+    background: white;
+    width: 90%; max-width: 400px;
+    padding: 25px; border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: slideUp 0.3s ease-out;
+}
+
+.modal-title { color: #C1121F; margin-bottom: 10px; font-size: 1.4rem; }
+.modal-price { color: #8A6A52; font-weight: bold; }
+
+.order-form input {
+    width: 100%; padding: 12px; margin: 10px 0 20px;
+    border: 1px solid #ddd; border-radius: 10px;
+}
+
+.pay-btn {
+    width: 100%; background: #C1121F; color: white;
+    border: none; padding: 15px; border-radius: 10px;
+    font-weight: bold; cursor: pointer;
+}
+
+.qr-img { width: 220px; border-radius: 10px; margin: 15px 0; border: 4px solid #f9f9f9; }
+
+.wa-confirm-btn {
+    width: 100%; background: #25D366; color: white;
+    border: none; padding: 15px; border-radius: 10px;
+    font-weight: bold; cursor: pointer; margin-top: 10px;
+}
+
+.back-btn {
+    background: none; border: none; color: #777;
+    margin-top: 15px; cursor: pointer; font-size: 0.9rem;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
