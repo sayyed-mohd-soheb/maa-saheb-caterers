@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path 
-import os
+import os ,dj_database_url
  
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-pv_daq98k64f_7s$t)9#mpiy#5bo1#d&o1%pw1nq0kb@vnl^3h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ["*"]
 # ALLOWED_HOSTS = [ '10.245.104.16' , 'localhost','127.0.0.1:8000']
 
@@ -86,7 +86,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+# Agar Render par DATABASE_URL milega, toh Neon use karega, warna local SQLite
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -125,8 +127,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# WhiteNoise ko bolenge ki static files handle kare
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Manifest hatane se yeh strict checking band kar dega aur crash nahi hoga
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # --- MEDIA FILES (IMAGES/VIDEOS) FOR CLOUDINARY ---
 # Yeh check karega ki agar CLOUDINARY_URL server par hai, tabhi Cloudinary use kare
