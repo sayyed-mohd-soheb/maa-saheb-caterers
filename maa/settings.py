@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-pv_daq98k64f_7s$t)9#mpiy#5bo1#d&o1%pw1nq0kb@vnl^3h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = False #------------------------------------------------------------------------------------------
 ALLOWED_HOSTS = ["*"]
 # ALLOWED_HOSTS = [ '10.245.104.16' , 'localhost','127.0.0.1:8000']
 
@@ -123,11 +123,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
-
+# --- STATIC FILES (CSS, JS) FOR LIVE SERVER ---
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# Manifest hatane se yeh strict checking band kar dega aur crash nahi hoga
+# YEH NAYI LINE: Django ko bata rahe hain ki aapki original CSS/JS kahan rakhi hai
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] 
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # --- MEDIA FILES (IMAGES/VIDEOS) FOR CLOUDINARY ---
