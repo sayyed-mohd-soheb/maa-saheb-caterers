@@ -131,8 +131,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-
 
 # extra add on 
 MEDIA_URL = '/media/'
@@ -142,5 +140,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 RAZORPAY_KEY_ID = 'rzp_test_SYCLG4Bb32H8Gm'
 RAZORPAY_KEY_SECRET = 'z7mnRkdMd2WZJFt47TY58ri1'
 
-# Yeh line ensure karegi ki media hamesha Cloudinary par hi save ho, Render par nahi.
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# --- CLOUDINARY CREDENTIALS FOR LOCAL VS CODE ---
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dpddeluej', # Aapka cloud name
+    'API_KEY': '769561459113556', # Aapki API Key
+    'API_SECRET': 'Yl9NcXJIpafg6Z6iMBiFRp4qCv6U' # Apna API Secret yahan paste karo
+}
+
+# --- NAYA DJANGO STORAGE SYSTEM ---
+STORAGES = {
+    "default": {
+        # Yeh aapki Photos/Videos ko hamesha Cloudinary mein bhejega
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        # Yeh CSS/JS design files ke liye hai
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
