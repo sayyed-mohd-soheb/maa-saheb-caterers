@@ -14,11 +14,12 @@
 {% csrf_token %}
 <header class="top-header">
   <div class="header-brand">
-    <div class="header-logo">🍛</div>
+    <div class="header-logo">
+      <img src="{% static 'images/logo.jpg' %}" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;">
+    </div>
     <h1>Maa-Saheb Caterers<small>Authentic · Halal · With Love</small></h1>
   </div>
 </header>
-
 {% comment %} image container -------------- {% endcomment %}
 <section id="home" class="section active">
   <div class="hero-banner">
@@ -69,10 +70,16 @@
   </button>
 </nav>
  
-<button class="fab" id="fabBtn" onclick="openPostSheet()">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-</button>
- 
+
+
+{% comment %} bhaut importnat plus icon ke liye  {% endcomment %}
+{% if user.is_authenticated and user.is_staff %}
+  <button class="fab" id="fabBtn" onclick="openPostSheet()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+    </svg>
+  </button>
+{% endif %}
 
 {% comment %} image posting {% endcomment %}
 
@@ -216,27 +223,42 @@
 
 </div>
 
-    <!-- NIYAZ / MISSION -->
-    <div class="card highlight flex-card">
-
-    <img src="{% static 'images/niyaz.jpg' %}" class="section-img">
-
-    <div class="text">
-        <h2>🙏 Niyaz Initiative</h2>
-        <p>
-            During COVID-19, we expanded our services to distribute food to the
-            poor and needy across slums in Mumbai. Today, this has become a major
-            part of our mission to serve those in need.
-        </p>
-    </div>
-
+<!-- NIYAZ / MISSION -->
+<div class="card highlight flex-card">
+  
+  <img src="{% static 'images/niyaz.jpg' %}" class="section-img">
+  
+  <div class="text">
+    <h2>🙏 Niyaz Initiative</h2>
+    <p>
+      During COVID-19, we expanded our services to distribute food to the
+      poor and needy across slums in Mumbai. Today, this has become a major
+      part of our mission to serve those in need.
+    </p>
+  </div>
 </div>
+  
 
     <!-- ADDRESS -->
     <div class="card">
         <h2>📍 Address</h2>
-        <p>Mumbai, India</p>
+        <p>Shop no. 1 , Makhdomn Shah baba Dargah Compound , Mahim (W) mumbai 400016</p>
     </div>
+
+
+
+    {% comment %} map section {% endcomment %}
+<div class="map-container">
+    <iframe 
+        width="100%" 
+        height="350" 
+        style="border:0; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" 
+        loading="lazy" 
+        allowfullscreen 
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://maps.google.com/maps?q=Makhdoom+Shah+Baba+Dargah,+Mahim+West,+Mumbai,+Maharashtra+400016&t=&z=16&ie=UTF8&iwloc=&output=embed">
+    </iframe>
+</div>
 
 </div>
 
@@ -264,7 +286,7 @@
 
         <!-- Column 1 -->
         <div class="footer-col">
-            <h3>Maa-Shaeb Caterers</h3>
+            <h3>Maa-Saheb Caterers</h3>
             <p>Serving food with love and purpose.</p>
         </div>
 
@@ -280,7 +302,13 @@
         <div class="footer-col">
             <h4>Contact</h4>
             <p>📍 Mumbai, India</p>
-            <p>📞 +91 9876543210</p>
+            <p>📞 +91 9833759589</p>
+        </div>
+
+        <!-- Column 4 -->
+        <div class="footer-col">
+            <h4>Social Accounts</h4>
+            <p>Insta ID: @mahim_dargah</p>
         </div>
 
     </div>

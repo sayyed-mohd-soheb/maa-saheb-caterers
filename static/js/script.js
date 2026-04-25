@@ -64,59 +64,60 @@ function buildFeed() {
     if (!container) return;
 
     container.innerHTML = posts.map((p, idx) => {
-       // NAYA UI FIX: controls hata diya, muted hata diya, background white kar diya
         const mediaHTML = p.isVideo 
             ? `<video src="${p.url}" loop playsinline class="feed-video" id="video_${p.id}" style="width: 100%; max-height: 550px; object-fit: contain; display: block; margin: 0 auto; background: #ffffff; cursor: pointer;"></video>`
             : `<img src="${p.url}" alt="food" loading="lazy" style="width: 100%; max-height: 550px; object-fit: contain; display: block; margin: 0 auto;"/>`;
 
         return `
-        <div class="post-card" style="animation-delay:${idx * .07}s">
+        <div class="post-card" style="animation-delay:${idx * .07}s; position: relative; overflow: hidden;">
+            
             <div class="post-header">
-                <div class="post-avatar">🍛</div>
+                <div class="post-avatar">
+                    <img src="/static/images/logo.jpg" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
                 <div class="post-meta">
                     <div class="uname">Maa-Saheb Caterers</div>
                     <div class="utime">${p.time}</div>
                 </div>
-                <button class="post-more" onclick="deletePost(${p.id})">🗑️</button>
             </div>
-
-            <div class="post-media" ondblclick="toggleLike(${p.id})" style="width: 100%; height: auto; background: transparent; display: flex; justify-content: center; align-items: center;">
+            
+            <div class="post-media" ondblclick="toggleLike('${p.id}')" style="width: 100%; height: auto; max-height: 550px; overflow: hidden; background: transparent; display: flex; justify-content: center; align-items: center; position: relative; z-index: 1;">
                 ${mediaHTML}
                 <div class="heart-burst" id="hb${p.id}">❤️</div>
             </div>
 
-            <div class="post-actions" style="display: flex; gap: 15px; align-items: center; justify-content: flex-start; width: max-content; padding: 10px 0;">
-                <button class="action-btn${p.liked ? ' liked' : ''}" id="lb${p.id}" onclick="toggleLike(${p.id})" style="display: flex; align-items: center; gap: 5px;">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="${p.liked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <div class="post-actions" style="display: flex; gap: 15px; align-items: center; justify-content: flex-start; padding: 10px 14px; position: relative; z-index: 9999; background: var(--white); pointer-events: auto;">
+                
+                <button type="button" class="action-btn${p.liked ? ' liked' : ''}" id="lb${p.id}" onclick="toggleLike('${p.id}')" style="cursor: pointer; background: transparent; border: none; display: flex; align-items: center; gap: 5px;">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="${p.liked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                     </svg>
-                    <span id="lc${p.id}">${p.likes}</span>
+                    <span id="lc${p.id}" style="font-size: 1rem;">${p.likes}</span>
                 </button>
 
-                <button class="action-btn" onclick="openComments(${p.id})" style="display: flex; align-items: center; gap: 5px;">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <button type="button" class="action-btn" onclick="openComments('${p.id}')" style="cursor: pointer; background: transparent; border: none; display: flex; align-items: center; gap: 5px;">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                     </svg>
-                    <span>${p.comments}</span>
+                    <span style="font-size: 1rem;">${p.comments}</span>
                 </button>
 
-                <button class="action-btn share-btn" onclick="openShare('${encodeURIComponent(p.caption)}','${p.url}')" style="display: flex; align-items: center; gap: 6px;">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <button type="button" class="action-btn" onclick="openShare('${p.id}')" style="cursor: pointer; background: transparent; border: none; display: flex; align-items: center; gap: 6px;">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
                     </svg>
-                    <span style="font-weight: 600; font-size: 0.9rem;">Share</span>
+                    <span style="font-weight: 600; font-size: 0.95rem;">Share</span>
                 </button>
+
             </div>
 
-            <div class="post-caption">
-                <span class="uname2">Maa-Saheb Caterers</span>
+            <div class="post-caption" style="padding: 0 14px 10px; position: relative; z-index: 9999; background: var(--white);">
+                <span class="uname2" style="font-weight: bold;">Maa-Saheb Caterers</span>
                 <span class="captext">${p.caption}</span>
             </div>
         </div>`;
     }).join('');
 }
-
-
 // deleteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 async function deletePost(postId) {
     if (!confirm("Are you sure you want to delete this post?")) return;
@@ -134,44 +135,124 @@ async function deletePost(postId) {
 
 // script.js mein purane toggleLike ko isse replace karein  , done 
 
+// // --- NAYA INSTANT LIKE FUNCTION ---
+// function toggleLike(id) {
+//     // 1. Post dhoondo
+//     const p = posts.find(x => x.id === id);
+//     if (!p) return;
+
+//     // 2. ⚡ INSTANT UI UPDATE (Bina backend ka wait kiye)
+//     p.liked = !p.liked; // True ko false, false ko true karo
+//     p.likes = p.liked ? p.likes + 1 : p.likes - 1; // Count badhao/ghatao
+
+//     // UI elements ko turant update karo
+//     document.getElementById(`lc${id}`).innerText = p.likes;
+//     const btn = document.getElementById(`lb${id}`);
+//     const svg = btn.querySelector('svg');
+
+//     if (p.liked) {
+//         btn.classList.add('liked');
+//         svg.setAttribute('fill', 'currentColor');
+        
+//         // Double tap wala bada dil (Heart Burst) bhi instant dikhao!
+//         const heartBurst = document.getElementById(`hb${id}`);
+//         if (heartBurst) {
+//             heartBurst.classList.add('pop');
+//             setTimeout(() => heartBurst.classList.remove('pop'), 600);
+//         }
+//     } else {
+//         btn.classList.remove('liked');
+//         svg.setAttribute('fill', 'none');
+//     }
+
+//     // 3. 🌐 CHUP-CHAAP BACKGROUND MEIN SERVER KO BATA DO
+//     fetch(`/like-post/${id}/`)
+//     .then(res => res.json())
+//     .then(data => {
+//         // Agar backend bolta hai number alag hai, toh sync kar lo (Backup ke liye)
+//         p.likes = data.likes;
+//         document.getElementById(`lc${id}`).innerText = data.likes;
+//     })
+//     .catch(err => console.error("Network slow hai, par UI instant update ho gaya!", err));
+// }
+/**
+ * Toggles the like status of a post instantly.
+ */
 function toggleLike(id) {
+    // 🛡️ FIX: Changed === to == to match String ID with Number ID
+    const p = posts.find(x => x.id == id);
+    if (!p) return; // Silent exit prevented!
+
+    p.liked = !p.liked;
+    p.likes = p.liked ? p.likes + 1 : p.likes - 1;
+
+    document.getElementById(`lc${id}`).innerText = p.likes;
+    const btn = document.getElementById(`lb${id}`);
+    const svg = btn.querySelector('svg');
+
+    if (p.liked) {
+        btn.classList.add('liked');
+        svg.setAttribute('fill', 'currentColor');
+        
+        const heartBurst = document.getElementById(`hb${id}`);
+        if (heartBurst) {
+            heartBurst.classList.add('pop');
+            setTimeout(() => heartBurst.classList.remove('pop'), 600);
+        }
+    } else {
+        btn.classList.remove('liked');
+        svg.setAttribute('fill', 'none');
+    }
+
+    // Background sync with database
     fetch(`/like-post/${id}/`)
     .then(res => res.json())
     .then(data => {
-        // 1. Like count update karo
+        p.likes = data.likes;
         document.getElementById(`lc${id}`).innerText = data.likes;
-        
-        // 2. Button aur SVG pakdo
-        const btn = document.getElementById(`lb${id}`);
-        const svg = btn.querySelector('svg');
-        
-        // 3. Agar backend ne 'liked: true' bheja hai toh Laal (Red) kardo
-        if (data.liked) {
-            btn.classList.add('liked');
-            svg.setAttribute('fill', 'currentColor'); // Pura red
-        } 
-        // 4. Agar 'liked: false' bheja hai toh Khali (Outline) kardo
-        else {
-            btn.classList.remove('liked');
-            svg.setAttribute('fill', 'none'); // Sirf outline
-        }
-        
-        // Array mein bhi state update kar do taaki double click chalte rahe
-        const p = posts.find(x => x.id === id);
-        if (p) {
-            p.liked = data.liked;
-            p.likes = data.likes;
-        }
-    });
+    })
+    .catch(err => console.error("Sync error:", err));
 }
 /* ==========================================================================
    4. COMMENTS LOGIC
    ========================================================================== */
+// function openComments(postId) {
+//     const idField = document.getElementById('currentPostId');
+//     if (idField) idField.value = postId;
+
+//     const post = posts.find(p => p.id === postId);
+//     const listDiv = document.getElementById('commentsList');
+    
+//     if (post && post.comments_list && post.comments_list.length > 0) {
+//         listDiv.innerHTML = post.comments_list.map(c => `
+//             <div style="margin-bottom: 12px; border-bottom: 1px solid #f0f0f0; padding-bottom: 8px; text-align: left;">
+//                 <span style="font-weight: 700; font-size: 0.85rem; color: #C1121F;">Guest</span>
+//                 <span style="font-size: 0.7rem; color: #8A6A52; margin-left: 5px;">${c.time}</span>
+//                 <p style="font-size: 0.85rem; margin-top: 3px; color: #1A0A00;">${c.text}</p>
+//             </div>
+//         `).join('');
+//     } else {
+//         listDiv.innerHTML = '<p style="color:var(--muted); text-align:center;">No comments yet. Be the first! 🍛</p>';
+//     }
+
+//     const overlay = document.getElementById('commentOverlay');
+//     if (overlay) overlay.classList.add('open');
+
+//     setTimeout(() => {
+//         const input = document.getElementById('modalCommentInput');
+//         if (input) input.focus();
+//     }, 300);
+// }
+
+/**
+ * Opens the comments modal for a specific post.
+ */
 function openComments(postId) {
     const idField = document.getElementById('currentPostId');
     if (idField) idField.value = postId;
 
-    const post = posts.find(p => p.id === postId);
+    // 🛡️ FIX: Changed === to == 
+    const post = posts.find(p => p.id == postId);
     const listDiv = document.getElementById('commentsList');
     
     if (post && post.comments_list && post.comments_list.length > 0) {
@@ -214,7 +295,7 @@ function submitModalComment() {
     .then(data => {
         if(data.status === 'success') {
             textInput.value = ''; 
-            const postIdx = posts.findIndex(p => p.id === parseInt(postId));
+            const postIdx = posts.findIndex(p => p.id == parseInt(postId));
             if (postIdx > -1) {
                 posts[postIdx].comments_list.unshift({ text: text, time: "Just now" });
                 posts[postIdx].comments += 1; 
@@ -257,39 +338,82 @@ function removePreview(){
     document.getElementById('uploadZone').style.display='block';
 }
 
+
+// postttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+/**
+ * Handles the post submission process including media upload and UI feedback.
+ */
 function submitPost() {
-    // 1. Button ko pakdo
-    let postBtn = document.querySelector('.btn-post');
-    
-    // 2. Button ka text change karo aur usko disable kar do
-    postBtn.innerHTML = "Posting... Please wait ⏳";
-    postBtn.disabled = true;
-    postBtn.style.opacity = "0.7";
-    const cap = document.getElementById('captionInput').value.trim();
+    const postBtn = document.querySelector('.btn-post');
+    const captionInput = document.getElementById('captionInput');
     const fileInput = document.getElementById('fileInput'); 
     const file = fileInput.files[0];
+    const caption = captionInput.value.trim();
 
-    if (!cap && !file) {
-        alert('Please add media or a caption!');
+    // Validation: Ensure either a caption or a file is provided
+    if (!caption && !file) {
+        alert('Please add media or a caption! 🍛');
         return;
     }
 
+    // 1. UI Feedback: Disable button and show loading state
+    postBtn.innerHTML = `Posting... <span class="loader-dots"></span>`;
+    postBtn.disabled = true;
+    postBtn.style.opacity = "0.6";
+    postBtn.style.cursor = "not-allowed";
+
+    // Prepare multipart form data for the backend
     const formData = new FormData();
-    formData.append('caption', cap);
+    formData.append('caption', caption);
     if (file) formData.append('media', file);
 
-    fetch('/upload-post/', { method: 'POST', body: formData })
-    .then(response => response.json())
+    // 2. Execute background upload via Fetch API
+    fetch('/upload-post/', { 
+        method: 'POST', 
+        body: formData,
+        headers: { 
+            'X-CSRFToken': getCookie('csrftoken') 
+        }
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+    })
     .then(data => {
         if (data.status === 'success') {
-            alert('Post saved to database successfully! 🥳');
-            closePostSheet();
-            window.location.reload(); 
-        } else alert('Error: ' + data.message);
+            // Visual confirmation of success
+            postBtn.innerHTML = "Success! ✅";
+            postBtn.style.background = "#25D366"; // Success Green
+            
+            // Brief delay to allow the user to see the success state before reload
+            setTimeout(() => {
+                window.location.reload(); 
+            }, 600);
+        } else {
+            // Handle server-side errors
+            alert('Error: ' + data.message);
+            resetPostButton(postBtn);
+        }
     })
-    .catch(error => { console.error('Error:', error); alert('Something went wrong!'); });
+    .catch(error => { 
+        // Handle network or unexpected errors
+        console.error('Submission Error:', error); 
+        alert('Upload failed. Please check your connection and try again.'); 
+        resetPostButton(postBtn);
+    });
 }
 
+/**
+ * Reverts the post button to its original state if an error occurs.
+ * @param {HTMLElement} btn - The post button element.
+ */
+function resetPostButton(btn) {
+    btn.innerHTML = "Post Now ✨";
+    btn.disabled = false;
+    btn.style.opacity = "1";
+    btn.style.cursor = "pointer";
+    btn.style.background = "linear-gradient(135deg, var(--orange), var(--red))";
+}
 /* ==========================================================================
    6. MENU, ORDERING & HYBRID PAYMENT LOGIC
    ========================================================================== */
@@ -397,11 +521,16 @@ function redirectToWhatsApp() {
 /* ==========================================================================
    7. SHARE & CONTACT US LOGIC
    ========================================================================== */
-function openShare(cap, img) {
-    shareCaption = decodeURIComponent(cap); shareImg = img;
+function openShare(id) {
+    // ID se array mein post dhoondo
+    const p = posts.find(x => x.id == id);
+    if (!p) return;
+    
+    // Ab caption aur image safely set honge
+    shareCaption = p.caption; 
+    shareImg = p.url;
     document.getElementById('shareOverlay').classList.add('open');
 }
-
 function shareVia(p) {
     const txt = `Check out Maa-Saheb Caterers! \n\n${shareCaption}\n\nOrder now: ${location.href}`;
     const et = encodeURIComponent(txt), eu = encodeURIComponent(location.href);
