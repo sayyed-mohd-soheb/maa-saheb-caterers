@@ -33,19 +33,19 @@ function qrBgClose(e) { bgClose(e, 'qrOverlay', null); }
    2. DATA & STATE VARIABLES
    ========================================================================== */
 const menuData = [
-    { cat: '🍚 SECTION I {Per packets Orders}', items: [
+    { cat: '🍚 SECTION I : Per packets Orders ', items: [
         { name: 'Veg Pulav', desc: 'Basmati rice cooked with fresh vegetables and mild spices', price: '₹40/Packet', img: '/static/images/veg2.jpg' },
         { name: 'veg Pulav + Water', desc: 'Basmati rice cooked with fresh vegetables and mild spices', price: '₹50/Packet', img: 'static/images/veg1.jpg' },
         { name: 'Chicken Pulav', desc: 'Tender chicken pieces cooked with fragrant basmati rice and mild spices', price: '₹60/Packet', img: 'static/images/chic2.jpg' },
         { name: 'Chicken Pulav + Water', desc: 'Tender chicken pieces cooked with fragrant basmati rice and mild spices', price: '₹70/Packet', img: 'static/images/chic1.jpg' },
     ]},
-    { cat: '🍗 SECTION II {BULK ORDERS}   - (Kindly order  one day before)  ', items: [
+    { cat: '🍗 SECTION II : BULK ORDERS   - (Kindly order  one day before)  ', items: [
         { name: 'Meal Box  {50 Boxes} ', desc: 'Complete Meal', price: '₹5000', img: 'static/images/meal.jpg' },
         { name: 'Channa {10KG}', desc: 'Spicy Chickpeas', price: '₹3000', img: 'static/images/channa.jpg' },
         { name: 'Juice  {100 Glasses}', desc: 'Fresh Refreshment', price: '₹2500', img: 'static/images/juice.jpg' },
         { name: 'Halwa  {10KG}', desc: 'Sweet Delight', price: '₹3500', img: 'static/images/halwa.jpg' },
     ]},        
-    { cat: '🥗 SECTION III {BULK ORDERS}  -  (Kindly order  one day before)  ', items: [
+    { cat: '🥗 SECTION III : BULK ORDERS  -  (Kindly order  one day before)  ', items: [
         { name: 'Veg Pulav {6KG} ', desc: 'Basmati rice cooked with fresh vegetables and mild spices', price: '₹3700', img: 'static/images/VEG6kg.jpg' },
         { name: 'Mutton Pulav {6KG}', desc: 'Slow-cooked tender mutton with aromatic basmati rice and traditional spices', price: '₹8100', img: 'static/images/MUTTON6kg.jpg' },
         { name: 'Chicken Pulav {6KG}', desc: 'Tender chicken pieces cooked with fragrant basmati rice and mild spices', price: '₹4500', img: 'static/images/CHICKEN6kg.jpg' },
@@ -417,12 +417,40 @@ function resetPostButton(btn) {
 /* ==========================================================================
    6. MENU, ORDERING & HYBRID PAYMENT LOGIC
    ========================================================================== */
-function buildMenu(){
-    const b=document.getElementById('menuBody');
-    menuData.forEach(c=>{
-        b.innerHTML+=`<div class="cat-label">${c.cat}</div>`;
-        c.items.forEach(item=>{
-            b.innerHTML+=`
+// function buildMenu(){
+//     const b=document.getElementById('menuBody');
+//     menuData.forEach(c=>{
+//         b.innerHTML+=`<div class="cat-label">${c.cat}</div>`;
+//         c.items.forEach(item=>{
+//             b.innerHTML+=`
+//                 <div class="menu-card">
+//                     <img src="${item.img}" alt="${item.name}" loading="lazy"/>
+//                     <div class="mci">
+//                         <h3>${item.name}</h3><p>${item.desc}</p>
+//                         <span class="price">${item.price}</span>
+//                     </div>
+//                     <div class="mcr">
+//                         <button class="order-btn" onclick="openQR('${item.name}','${item.price}')">Order<br>Now</button>
+//                     </div>
+//                 </div>`;
+//         });
+//     });
+// }
+
+// Global cart object jismein hum order save karenge
+let cart = {};
+
+function buildMenu() {
+    const b = document.getElementById('menuBody');
+    b.innerHTML = ''; // Clear old content
+    
+    menuData.forEach((c, catIdx) => {
+        b.innerHTML += `<div class="cat-label">${c.cat}</div>`;
+        
+        c.items.forEach((item, itemIdx) => {
+            const itemId = `item_${catIdx}_${itemIdx}`; // Unique ID for each item
+            
+            b.innerHTML += `
                 <div class="menu-card">
                     <img src="${item.img}" alt="${item.name}" loading="lazy"/>
                     <div class="mci">
@@ -430,11 +458,85 @@ function buildMenu(){
                         <span class="price">${item.price}</span>
                     </div>
                     <div class="mcr">
-                        <button class="order-btn" onclick="openQR('${item.name}','${item.price}')">Order<br>Now</button>
+                        <div class="cart-controls" id="controls_${itemId}">
+                            <button class="add-btn" onclick="addInitial('${itemId}', '${item.name}', '${item.price}')">ADD</button>
+                        </div>
                     </div>
                 </div>`;
         });
     });
+}
+
+
+// add to cart optionsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+// Jab pehli baar "ADD" par click hoga
+function addInitial(id, name, price) {
+    // Cart mein 1 quantity add kardo
+    cart[id] = { name: name, price: price, qty: 1 };
+    renderCartControls(id);
+}
+
+// Plus (+) aur Minus (-) handle karne ke liye
+function updateQty(id, change) {
+    if (cart[id]) {
+        cart[id].qty += change;
+        
+        if (cart[id].qty <= 0) {
+            delete cart[id]; // 0 hua toh cart se nikal do
+        }
+    }
+    renderCartControls(id);
+}
+
+// UI update karne ka jadoo (ADD button ko [ - 1 + ] banata hai)
+function renderCartControls(id) {
+    const controlDiv = document.getElementById(`controls_${id}`);
+    
+    if (cart[id] && cart[id].qty > 0) {
+        // Agar item cart mein hai toh [ - | 1 | + ] dikhao
+        controlDiv.innerHTML = `
+            <div class="qty-box">
+                <button class="qty-btn" onclick="updateQty('${id}', -1)">-</button>
+                <div class="qty-val">${cart[id].qty}</div>
+                <button class="qty-btn" onclick="updateQty('${id}', 1)">+</button>
+            </div>
+        `;
+    } else {
+        // Agar quantity 0 ho gayi toh wapas "ADD" button dikhao
+        buildMenu(); // Re-render menu to reset state cleanly
+    }
+    
+    // Yahan humne function ko CALL kiya hai
+    updateCartSnackbar(); 
+}
+
+// Cart ki total price aur items calculate karke Snackbar dikhane ka logic (Yeh bahar rahega)
+function updateCartSnackbar() {
+    const snackbar = document.getElementById('cartSnackbar');
+    if (!snackbar) return; // Safety check agar HTML na mile
+    
+    let totalItems = 0;
+    let totalPrice = 0;
+    
+    for (let id in cart) {
+        totalItems += cart[id].qty;
+        
+        // Price mein se numbers nikalne ka logic (e.g. "₹40/Packet" -> 40)
+        let priceNum = parseInt(cart[id].price.replace(/[^0-9]/g, ''));
+        if (isNaN(priceNum)) priceNum = 0;
+        
+        totalPrice += priceNum * cart[id].qty;
+    }
+    
+    if (totalItems > 0) {
+        document.getElementById('cartTotalItems').innerText = `${totalItems} Item${totalItems > 1 ? 's' : ''}`;
+        document.getElementById('cartTotalPrice').innerText = `₹${totalPrice}`;
+        snackbar.classList.add('show'); // Snackbar bahar nikalo
+    } else {
+        snackbar.classList.remove('show'); // Cart khali toh chupalo
+    }
+    // updateCartSnackbar() ke end mein yeh line add karni hai:
+    renderOrderSummary(totalItems, totalPrice);
 }
 
 function openQR(name, price) {
@@ -660,24 +762,80 @@ document.addEventListener('click', function(e) {
     }
 });
 
-// copy number logc
-// UPI Number Copy Karne Ka Function
-function copyUPI() {
-    // Number uthao
-    const upiNumber = document.getElementById("upiNumber").innerText;
+// // copy number logc
+// // UPI Number Copy Karne Ka Function
+// function copyUPI() {
+//     // Number uthao
+//     const upiNumber = document.getElementById("upiNumber").innerText;
     
-    // Mobile/Laptop ke clipboard (memory) mein save karo
-    navigator.clipboard.writeText(upiNumber).then(() => {
-        const copyBtn = document.getElementById("copyBtn");
+//     // Mobile/Laptop ke clipboard (memory) mein save karo
+//     navigator.clipboard.writeText(upiNumber).then(() => {
+//         const copyBtn = document.getElementById("copyBtn");
         
-        // Button ka style change karo taaki user ko pata chale copy ho gaya
-        copyBtn.innerText = "Copied! ✅";
-        copyBtn.style.background = "#25D366"; // WhatsApp jaisa Green color
+//         // Button ka style change karo taaki user ko pata chale copy ho gaya
+//         copyBtn.innerText = "Copied! ✅";
+//         copyBtn.style.background = "#25D366"; // WhatsApp jaisa Green color
         
-        // 2 second baad wapas normal kar do
-        setTimeout(() => {
-            copyBtn.innerText = "Copy";
-            copyBtn.style.background = "#C1121F"; // Wapas Red
-        }, 2000);
-    });
+//         // 2 second baad wapas normal kar do
+//         setTimeout(() => {
+//             copyBtn.innerText = "Copy";
+//             copyBtn.style.background = "#C1121F"; // Wapas Red
+//         }, 2000);
+//     });
+// }
+
+// order summary 
+
+// --- STEP 4 LOGIC ---
+
+// 1. Scroll karne ka function
+function scrollToSummary() {
+    const summarySection = document.getElementById('orderSummarySection');
+    if (summarySection.style.display !== 'none') {
+        summarySection.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+}
+
+// 2. Delete button ka logic
+function deleteFromCart(id) {
+    delete cart[id]; // Cart se uda do
+    renderCartControls(id); // Menu ke button ko wapas "ADD" banao
+}
+
+// 3. Order Summary render karne ka jadoo
+function renderOrderSummary(totalItems, totalPrice) {
+    const summarySection = document.getElementById('orderSummarySection');
+    const itemsList = document.getElementById('cartItemsList');
+    
+    // Agar cart khali hai toh section hide kar do
+    if (totalItems === 0) {
+        summarySection.style.display = 'none';
+        return;
+    }
+
+    // Agar cart mein items hain toh section dikhao
+    summarySection.style.display = 'block';
+    document.getElementById('summaryTotalAmount').innerText = `₹${totalPrice}`;
+    
+    itemsList.innerHTML = ''; // Purana list clear karo
+    
+    for (let id in cart) {
+        let item = cart[id];
+        let priceNum = parseInt(item.price.replace(/[^0-9]/g, '')) || 0;
+        let itemTotal = priceNum * item.qty;
+
+        itemsList.innerHTML += `
+            <div class="cart-item-row">
+                <div class="cart-item-info">
+                    <h4>${item.name}</h4>
+                    <p>₹${priceNum} x ${item.qty} = ₹${itemTotal}</p>
+                </div>
+                <div class="cart-item-actions">
+                    <button class="cart-delete-btn" onclick="deleteFromCart('${id}')">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
 }

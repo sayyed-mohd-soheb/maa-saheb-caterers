@@ -363,36 +363,34 @@ button, a {
   transition: all .3s ease; 
 }
 
-/* HOVER EFFECT (Glow with Light Orange)  */
+/* HOVER EFFECT (Glow with Golden Touch) */
 .nav-item:hover { 
-  color: var(--orange); 
+  color: #B38728; /* Golden Text */
 }
 .nav-item:hover svg { 
-  transform: translateY(-2px) scale(1.1); /* Halka sa upar aayega */
-  filter: drop-shadow(0 4px 8px rgba(242, 100, 25, 0.35)); /* Orange Glow Effect */
+  transform: translateY(-2px) scale(1.1); 
+  filter: drop-shadow(0 4px 8px rgba(179, 135, 40, 0.35)); /* Golden Glow Effect */
 }
 
 /* Active State (Jo page current open hai) */
 .nav-item.active { 
-  color: var(--orange); 
+  color: #B38728; /* Golden Text */
 }
 .nav-item.active svg { 
   transform: scale(1.15); 
-  filter: drop-shadow(0 4px 8px rgba(242, 100, 25, 0.4)); 
+  filter: drop-shadow(0 4px 8px rgba(179, 135, 40, 0.4)); /* Golden Glow */
 }
 
-
 /* ── CONTACT US NAV ITEM ── */
-/* Default color ko baakiyoun jaisa 'muted' kar diya */
 .nav-item.contact-nav { color: var(--muted); }
 .nav-item.contact-nav svg { stroke: var(--muted); transition: all .3s ease; }
 
-/* Hover par orange glow barkarar rahega */
-.nav-item.contact-nav:hover { color: var(--orange); }
+/* Hover par golden glow */
+.nav-item.contact-nav:hover { color: #B38728; }
 .nav-item.contact-nav:hover svg { 
-  stroke: var(--orange); 
+  stroke: #B38728; 
   transform: translateY(-2px) scale(1.1);
-  filter: drop-shadow(0 4px 8px rgba(242, 100, 25, 0.35)); 
+  filter: drop-shadow(0 4px 8px rgba(179, 135, 40, 0.35)); 
 }
 /* ══════════════════════════════
     FAB (UPLOAD BUTTON)
@@ -665,9 +663,12 @@ textarea.caption-input:focus { border-color: var(--orange); background: #fff; }
 }
 .menu-body { padding: 16px; }
 .cat-label {
-  font-family: 'Cormorant Garamond', serif; font-size: 1.15rem;
-  color: var(--red); margin: 20px 0 10px;
-  padding-left: 10px; border-left: 3px solid var(--orange);
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 1.15rem;
+    color: #B38728; /* Golden Text */
+    margin: 20px 0 10px;
+    padding-left: 10px; 
+    border-left: 3px solid #B38728; /* Golden Border */
 }
 .menu-card {
   background: var(--white); border-radius: 14px;
@@ -682,15 +683,103 @@ textarea.caption-input:focus { border-color: var(--orange); background: #fff; }
 .mci p  { font-size: .75rem; color: var(--muted); line-height: 1.5; }
 .mci .price { display: inline-block; margin-top: 5px; background: #fff0e6; color: var(--orange); font-weight: 700; font-size: .8rem; padding: 2px 10px; border-radius: 20px; }
 .mcr { padding-right: 12px; }
-.order-btn {
-  background: var(--orange); color: #fff; border: none;
-  border-radius: 10px; padding: 9px 12px;
-  font-size: .77rem; font-weight: 700; cursor: pointer;
-  font-family: 'Nunito', sans-serif; white-space: nowrap;
-  transition: background .2s;
-}
-.order-btn:hover { background: var(--red); }
 
+/* ══════════════════════════════
+   NEW ADD TO CART UI
+══════════════════════════════ */
+.cart-controls {
+    min-width: 75px;
+    display: flex;
+    justify-content: center;
+}
+/* 
+.add-btn {
+    background: #fff;
+    color: var(--red);
+    border: 1px solid var(--red);
+    border-radius: 8px;
+    padding: 6px 20px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(193, 18, 31, 0.1);
+    transition: all 0.2s;
+    font-family: 'Nunito', sans-serif;
+}
+.add-btn:active { transform: scale(0.95); } */
+
+.add-btn {
+    background: #fff;
+    color: #B38728; /* Golden Text */
+    border: 1px solid #B38728; /* Golden Border */
+    border-radius: 8px;
+    padding: 6px 20px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(179, 135, 40, 0.15); /* Halka golden shadow */
+    transition: all 0.2s;
+    font-family: 'Nunito', sans-serif;
+}
+.add-btn:active { transform: scale(0.95); }
+/* 
+.qty-box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--red);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(193, 18, 31, 0.1);
+}
+
+.qty-btn {
+    background: #fff5f5;
+    color: var(--red);
+    border: none;
+    width: 28px;
+    height: 28px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.qty-btn:active { background: #ffdada; } */
+.qty-box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #B38728; /* Golden Border */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(179, 135, 40, 0.15);
+}
+
+.qty-btn {
+    background: #fdf8e7; /* Bahut light golden background */
+    color: #B38728; /* Golden Icon */
+    border: none;
+    width: 28px;
+    height: 28px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.qty-btn:active { background: #f0e2b6; }
+
+.qty-val {
+    font-size: 0.85rem;
+    font-weight: 800;
+    width: 24px;
+    text-align: center;
+    color: var(--dark);
+    font-family: 'Nunito', sans-serif;
+}
 /* banner boxess */
 .menu-banner-section {
     display: flex;
@@ -865,4 +954,149 @@ textarea.caption-input:focus { border-color: var(--orange); background: #fff; }
     .map-container iframe {
         height: 250px;
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ══════════════════════════════
+   CART SNACKBAR (VIEW CART)
+══════════════════════════════ */
+.cart-snackbar {
+    position: fixed;
+    /* Bottom nav ki height (58px) + safe area ke theek upar baithayega */
+    bottom: calc(var(--nav-h) + var(--safe-bottom)); 
+    left: 0;
+    right: 0;
+    background: #25D366; /* Premium WhatsApp jaisa Green */
+    color: #fff;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 290; /* Nav bar ke peeche se niklega */
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 15px rgba(37, 211, 102, 0.3);
+    
+    /* Animation ke liye pehle isko niche chupayenge */
+    transform: translateY(100%);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+    pointer-events: none;
+}
+
+.cart-snackbar.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.cart-snack-info {
+    font-size: 0.95rem;
+    font-weight: 800;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.view-cart-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.view-cart-btn svg { transition: transform 0.2s; }
+.view-cart-btn:hover svg { transform: translateX(5px); }
+
+/* ══════════════════════════════
+   ORDER SUMMARY SECTION
+══════════════════════════════ */
+.order-summary-container {
+    margin: 20px 16px 80px 16px; /* Bottom space taaki nav se overlap na ho */
+    background: var(--white);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
+}
+
+.order-summary-container h3 {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--red);
+    margin-bottom: 15px;
+    border-bottom: 2px dashed var(--border);
+    padding-bottom: 10px;
+}
+
+.cart-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.cart-item-info {flex : 1; }
+.cart-item-info h4 { font-size: 0.95rem; color: var(--dark); margin-bottom: 3px; }
+.cart-item-info p { font-size: 0.85rem; color: var(--muted); font-weight: 700; }
+
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.cart-delete-btn {
+    background: #fff5f5;
+    color: var(--red);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.cart-delete-btn:active { background: #ffe3e3; transform: scale(0.9); }
+
+.cart-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--dark);
+}
+
+.place-order-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 15px;
+    font-size: 1rem;
+    font-weight: 800;
+    margin-top: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(193, 18, 31, 0.2);
+    font-family: 'Nunito', sans-serif;
 }
