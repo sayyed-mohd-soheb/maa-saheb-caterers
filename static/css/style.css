@@ -1,0 +1,1102 @@
+:root {
+  --orange: #F26419;
+  --red:    #C1121F;
+  --cream:  #FFF8F0;
+  --white:  #FFFFFF;
+  --dark:   #1A0A00;
+  --muted:  #8A6A52;
+  --border: #F0E0D0;
+  --nav-h:  58px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+*, *::before, *::after { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+  -webkit-tap-highlight-color: transparent; /* YEH JADUI LINE BLUE BOX GAYAB KAR DEGI */
+}
+
+body {
+    padding-bottom: 90px; /* Yeh niche 90px ki khaali jagah bana dega taaki nav bar kuch na chhupaye */
+}
+
+/* Aur buttons/links ko aur smooth feel dene ke liye ye bhi add kar do */
+button, a {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+/* ══════════════════════════════
+    TOP HEADER
+══════════════════════════════ */
+.top-header {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+/* Pehle gap 9px tha, ab usko badha kar 16px kar diya */
+.header-brand { 
+  display: flex; 
+  align-items: center; 
+  gap: 16px; 
+}
+
+/* --- TOP HEADER LOGO --- */
+.header-logo {
+  width: 45px;  /* Dabba chota rakha taaki Nav Bar patla rahe */
+  height: 45px;
+  background: transparent; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  flex-shrink: 0;
+  /* overflow: visible; zaroori hai taaki logo dabe ke bahar bada dikhe */
+  overflow: visible; 
+}
+
+.header-logo img {
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain; 
+  /* 2.8x Zoom kiya hai, isse logo bada dikhega par Nav nahi hilega */
+  transform: scale(6); 
+}
+.header-brand h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem; 
+  line-height: 1.1;
+  font-weight: 800;
+  /* ✨ GOLDEN SHINY TEXT MAGIC ✨ */
+  background: linear-gradient(to right, #BF953F, #B38728);
+  -webkit-background-clip: text; /* Safari/Chrome ke liye */
+  background-clip: text;         /* Standard (Error hatane ke liye) */
+  -webkit-text-fill-color: transparent;
+  color: transparent;            /* Standard */
+}
+.header-brand small {
+  display: block; font-size: .57rem; color: var(--muted);
+  font-family: 'Nunito', sans-serif; font-weight: 500;
+  letter-spacing: .5px; text-transform: uppercase;
+}
+.header-actions { display: flex; gap: 8px; }
+.hdr-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--dark); padding: 5px; border-radius: 8px;
+  transition: background .15s;
+}
+.hdr-btn:hover { background: var(--cream); }
+
+/* ── SECTIONS ── */
+.section { display: none; }
+.section.active { display: block; }
+
+/* ══════════════════════════════
+    HOME — INSTAGRAM FEED
+══════════════════════════════ */
+#home { background: #FAF5F0; }
+.feed-container { 
+  padding: 6px 0 100px 0; /* <--- YAHAN CHANGE HAI: Niche 100px ka extra space de diya */
+}
+
+/* ── HERO IMAGE BANNER ── */
+.hero-banner {
+  width: 100%;
+  /* background: #FAF5F0;  */
+  background:  #FCF6BA;
+  padding: 20px 24px; 
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-banner img {
+  width: 100%;
+  max-width: 900px;
+  height: auto !important; 
+  object-fit: contain; 
+  display: block;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* POST CARD */
+.post-card {
+  background: var(--white);
+  margin-bottom: 8px;
+  animation: fadeUp .4s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Pehle gap 10px tha, ab usko badha kar 16px kar diya */
+.post-header {
+  padding: 10px 14px;
+  display: flex; 
+  align-items: center; 
+  gap: 16px; 
+}
+
+/* --- FEED POST AVATAR --- */
+.post-avatar {
+  width: 40px; 
+  height: 40px; 
+  border-radius: 50%;
+  background: transparent; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.post-avatar img {
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain;
+  transform: scale(6); 
+}
+.post-meta { flex: 1; }
+
+.post-meta .uname { 
+  font-size: .95rem; 
+  font-weight: 800; 
+  /* ✨ GOLDEN SHINY TEXT MAGIC ✨ */
+  background: linear-gradient(to right, #BF953F, #B38728);
+  -webkit-background-clip: text; /* Safari/Chrome ke liye */
+  background-clip: text;         /* Standard (Error hatane ke liye) */
+  -webkit-text-fill-color: transparent;
+  color: transparent;            /* Standard */
+}
+.post-meta .utime { font-size: .71rem; color: var(--muted); }
+.post-more { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 1.2rem; padding: 4px; }
+
+.post-media {
+    width: 100%;
+    height: auto;
+    min-height: 300px; /* Ensures space exists even before load */
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden; /* CRITICAL: Prevents video from overlapping buttons below */
+}
+
+.feed-video {
+    width: 100%;
+    max-height: 550px;
+    object-fit: contain;
+    display: block;
+    z-index: 1; /* Keeps video behind the action buttons */
+}
+
+.post-actions {
+    position: relative;
+    z-index: 10; /* Ensures buttons are 'higher' than the video container */
+    background: var(--white); /* Ensures no transparency issues */
+}
+.post-media img, .post-media video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.heart-burst {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%) scale(0);
+  font-size: 5rem; pointer-events: none;
+  opacity: 0; transition: transform .15s ease, opacity .4s ease .15s;
+}
+.heart-burst.pop { transform: translate(-50%,-50%) scale(1.2); opacity: 1; }
+
+.post-actions {
+  padding: 8px 14px 4px !important; /* !important lagana zaroori hai side space ke liye */
+  display: flex; align-items: center; gap: 14px;
+}
+.post-caption { 
+  padding: 4px 14px 10px !important; /* Username aur caption ke space ke liye !important */
+}
+.action-btn {
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; gap: 5px;
+  color: var(--dark); font-size: .82rem; font-weight: 600;
+  padding: 4px 0; transition: color .15s; font-family: 'Nunito', sans-serif;
+}
+.action-btn svg { width: 23px; height: 23px; transition: transform .2s; }
+.action-btn:hover svg { transform: scale(1.15); }
+.action-btn.liked { color: var(--red); }
+.action-btn.liked svg { fill: var(--red); stroke: var(--red); }
+.share-btn { margin-left: auto; }
+
+.post-caption .uname2 { font-size: .85rem; font-weight: 700; margin-right: 4px; }
+.post-caption .captext { font-size: .84rem; line-height: 1.5; }
+.post-caption .tags { color: var(--orange); font-size: .8rem; margin-top: 3px; }
+
+/* ══════════════════════════════
+    ABOUT
+══════════════════════════════ */
+/* ══════════════════════════════
+    ABOUT US SECTION (Premium UI)
+══════════════════════════════ */
+
+/* 1. HERO SECTION */
+.hero {
+    display: flex;
+    align-items: center;
+    padding: 60px 20px;
+    /* Dhyan dein: URL mein '../images/' lagaya hai taaki live par image load ho */
+    background: linear-gradient(rgba(26, 10, 0, 0.7), rgba(193, 18, 31, 0.4)), url("../images/food.jpg"); 
+    background-size: cover;
+    background-position: center;
+    color: var(--white);
+    text-align: center;
+}
+.hero-text { margin: 0 auto; }
+.hero-text h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; line-height: 1.2; margin-bottom: 10px; }
+.hero-text span { color: var(--orange); } 
+.hero-text p { font-size: 1.1rem; opacity: 0.9; }
+
+/* 2. INFO & CARDS SECTION */
+.info {
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.card {
+    background: var(--white);
+    padding: 25px;
+    border-left: 5px solid var(--orange);
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+.highlight {
+    background: #fffcf8;
+    border-left: 5px solid var(--red);
+}
+.card h2 { 
+    color: var(--red); 
+    margin-bottom: 12px; 
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 1.8rem;
+}
+.card p { color: var(--dark); line-height: 1.6; font-size: 0.95rem; }
+
+/* 3. FLEX-CARD LAYOUT (Mobile First) */
+.flex-card {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    gap: 25px;
+}
+.section-img {
+    width: 100%;
+    max-width: 320px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* 4. STATS SECTION */
+.stats {
+    display: flex;
+    flex-direction: column; /* Mobile par upar-niche dikhega */
+    gap: 15px;
+    padding: 20px 20px 50px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.stat-box {
+    flex: 1;
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    color: var(--white);
+    padding: 25px 20px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(242, 100, 25, 0.3);
+}
+.stat-box h2 { font-size: 2.2rem; margin-bottom: 5px; font-family: 'Nunito', sans-serif;}
+.stat-box p { margin: 0; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9;}
+
+/* 5. PC / TABLET ADJUSTMENTS */
+@media (min-width: 768px) {
+    .hero { padding: 100px 40px; }
+    .hero-text h1 { font-size: 3.5rem; }
+    .info { padding: 60px 40px; }
+    .flex-card { flex-direction: row; text-align: left; }
+    .flex-card:nth-child(even) { flex-direction: row-reverse; } /* Dusra card ulta ho jayega */
+    .stats { flex-direction: row; padding: 20px 40px 80px; } /* PC par ek line mein aayenge */
+}
+/* ══════════════════════════════
+    BOTTOM NAV
+══════════════════════════════ */
+/* ══════════════════════════════
+    BOTTOM NAV (Premium Hover Glow)
+══════════════════════════════ */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: calc(var(--nav-h) + var(--safe-bottom));
+  background: var(--white); border-top: 1px solid var(--border);
+  display: flex; z-index: 300;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.08);
+  padding-bottom: var(--safe-bottom);
+}
+.nav-item {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 4px;
+  cursor: pointer; 
+  color: var(--muted); /* Default Light Color */
+  font-size: .65rem; font-weight: 700; letter-spacing: .3px;
+  background: none; border: none; 
+  font-family: 'Nunito', sans-serif;
+  transition: all .3s ease;
+}
+.nav-item svg { 
+  width: 22px; height: 22px; 
+  transition: all .3s ease; 
+}
+
+/* HOVER EFFECT (Glow with Golden Touch) */
+.nav-item:hover { 
+  color: #B38728; /* Golden Text */
+}
+.nav-item:hover svg { 
+  transform: translateY(-2px) scale(1.1); 
+  filter: drop-shadow(0 4px 8px rgba(179, 135, 40, 0.35)); /* Golden Glow Effect */
+}
+
+/* Active State (Jo page current open hai) */
+.nav-item.active { 
+  color: #B38728; /* Golden Text */
+}
+.nav-item.active svg { 
+  transform: scale(1.15); 
+  filter: drop-shadow(0 4px 8px rgba(179, 135, 40, 0.4)); /* Golden Glow */
+}
+
+/* ── CONTACT US NAV ITEM ── */
+.nav-item.contact-nav { color: var(--muted); }
+.nav-item.contact-nav svg { stroke: var(--muted); transition: all .3s ease; }
+
+/* Hover par golden glow */
+.nav-item.contact-nav:hover { color: #B38728; }
+.nav-item.contact-nav:hover svg { 
+  stroke: #B38728; 
+  transform: translateY(-2px) scale(1.1);
+  filter: drop-shadow(0 4px 8px rgba(179, 135, 40, 0.35)); 
+}
+/* ══════════════════════════════
+    FAB (UPLOAD BUTTON)
+══════════════════════════════ */
+.fab {
+  position: fixed;
+  bottom: calc(var(--nav-h) + var(--safe-bottom) + 16px);
+  right: 20px; /* 'left: 20px' ko hata kar 'right: 20px' kar diya */
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, var(--red), var(--orange));
+  border: none; border-radius: 50%; color: #fff;
+  cursor: pointer; z-index: 250;
+  box-shadow: 0 6px 20px rgba(242,100,25,.45);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .2s, box-shadow .2s;
+}
+.fab:hover { transform: scale(1.08); box-shadow: 0 8px 28px rgba(242,100,25,.55); }
+.fab:active { transform: scale(.94); }
+
+/* Aur sabse niche wale media query se purana FAB rule hata dena */
+/* @media (min-width: 480px) { .fab { left: auto; right: 20px; } } <- Ise delete kar do */
+
+/* ══════════════════════════════
+    BOTTOM SHEET BASE
+══════════════════════════════ */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(26,10,0,.55); z-index: 400;
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .25s;
+}
+.overlay.open { opacity: 1; pointer-events: all; }
+/* Isko replace karo BOTTOM SHEET BASE section mein */
+.sheet {
+  background: var(--white); width: 100%; max-width: 480px;
+  border-radius: 22px 22px 0 0;
+  padding: 18px 20px 36px;
+  transform: translateY(100%);
+  transition: transform .3s cubic-bezier(.32,0,.67,0);
+  position: relative; /* YEH LINE MISSING THI - Isse X button sahi jagah aayega */
+}
+.overlay.open .sheet { transform: translateY(0); transition-timing-function: cubic-bezier(.33,1,.68,1); }
+.sheet-handle { width: 36px; height: 4px; border-radius: 2px; background: #ddd; margin: 0 auto 16px; }
+
+/* ══════════════════════════════
+    CREATE POST SHEET
+══════════════════════════════ */
+#postSheet h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--red); margin-bottom: 16px; text-align: center; }
+.upload-zone {
+  border: 2px dashed var(--border); border-radius: 14px;
+  padding: 28px 20px; text-align: center; margin-bottom: 14px;
+  cursor: pointer; background: var(--cream);
+  transition: border-color .2s, background .2s;
+}
+.upload-zone:hover { border-color: var(--orange); background: #fff5ee; }
+.upload-zone .uz-icon { font-size: 2.2rem; margin-bottom: 8px; }
+.upload-zone p { font-size: .82rem; color: var(--muted); }
+.upload-zone strong { color: var(--orange); }
+#fileInput { display: none; }
+.preview-wrap {
+  display: none; position: relative; border-radius: 14px;
+  overflow: hidden; margin-bottom: 14px; aspect-ratio: 1; background: #000;
+}
+.preview-wrap img, .preview-wrap video { width: 100%; height: 100%; object-fit: cover; }
+.rm-preview {
+  position: absolute; top: 8px; right: 8px;
+  background: rgba(0,0,0,.6); color: #fff; border: none;
+  border-radius: 50%; width: 28px; height: 28px; cursor: pointer;
+  font-size: .85rem; display: flex; align-items: center; justify-content: center;
+}
+textarea.caption-input {
+  width: 100%; border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 12px; font-family: 'Nunito', sans-serif; font-size: .88rem;
+  resize: none; outline: none; color: var(--dark); background: var(--cream);
+  line-height: 1.5; transition: border-color .2s;
+}
+textarea.caption-input:focus { border-color: var(--orange); background: #fff; }
+.sheet-actions { display: flex; gap: 10px; margin-top: 14px; }
+.btn-cancel {
+  flex: 1; background: var(--cream); color: var(--muted);
+  border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 13px; font-size: .88rem; font-weight: 600;
+  cursor: pointer; font-family: 'Nunito', sans-serif;
+}
+.btn-post {
+  flex: 2; background: linear-gradient(135deg, var(--orange), var(--red));
+  color: #fff; border: none; border-radius: 12px;
+  padding: 13px; font-size: .88rem; font-weight: 700;
+  cursor: pointer; font-family: 'Nunito', sans-serif; transition: opacity .2s;
+}
+.btn-post:hover { opacity: .9; }
+
+/* ══════════════════════════════
+    SHARE SHEET
+══════════════════════════════ */
+#shareOverlay { z-index: 450; }
+#shareSheet h4 { text-align: center; font-size: .95rem; font-weight: 700; margin-bottom: 18px; }
+.share-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px 8px; }
+.share-opt {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  cursor: pointer; border: none; background: none; font-family: 'Nunito', sans-serif;
+}
+.si {
+  width: 54px; height: 54px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; transition: transform .15s;
+}
+.share-opt:hover .si { transform: scale(1.1); }
+.share-opt span { font-size: .7rem; color: var(--muted); font-weight: 600; }
+.si-wa   { background: #e7fde9; }
+.si-ig   { background: linear-gradient(135deg,#fde0f5,#fce5d2); }
+.si-fb   { background: #e8f0fe; }
+.si-tw   { background: #e8f5fd; }
+.si-sms  { background: #e0f7fa; }
+.si-mail { background: #fff3e0; }
+.si-copy { background: var(--cream); }
+.si-more { background: #f0f0f0; }
+.share-cancel {
+  width: 100%; margin-top: 16px; padding: 13px;
+  background: var(--cream); border: none; border-radius: 14px;
+  font-size: .88rem; font-weight: 700; color: var(--muted);
+  cursor: pointer; font-family: 'Nunito', sans-serif;
+}
+
+/* ══════════════════════════════
+    CONTACT SHEET
+══════════════════════════════ */
+/* ══════════════════════════════
+    CONTACT SHEET (Premium UI)
+══════════════════════════════ */
+#contactSheet h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; /* Font thoda bada kiya */
+  color: var(--red);
+  margin-bottom: 4px; 
+  text-align: center;
+  font-weight: 700;
+}
+#contactSheet .contact-sub {
+  text-align: center; 
+  font-size: 0.85rem; 
+  color: var(--muted);
+  margin-bottom: 24px;
+  padding: 0 10px;
+}
+.contact-field {
+  margin-bottom: 16px;
+}
+.contact-field label {
+  display: block; 
+  font-size: .75rem; 
+  font-weight: 800;
+  color: var(--dark); 
+  margin-bottom: 6px; 
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.contact-field input,
+.contact-field textarea {
+  width: 100%;
+  border: 1px solid transparent; /* Border hata kar shadow lagayenge */
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .9rem;
+  color: var(--dark);
+  background: var(--cream);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.04); /* Halka sa andar ki taraf shadow */
+  outline: none;
+  transition: all .3s ease;
+}
+.contact-field input:focus,
+.contact-field textarea:focus {
+  border-color: var(--orange);
+  background: var(--white);
+  box-shadow: 0 4px 15px rgba(242, 100, 25, 0.15); /* Focus karne par glowing effect */
+  transform: translateY(-2px); /* Click karne par input thoda upar aayega */
+}
+.contact-field textarea {
+  resize: none;
+  line-height: 1.6;
+}
+.btn-send {
+  width: 100%;
+  background: linear-gradient(135deg, var(--red), var(--orange));
+  box-shadow: 0 6px 15px rgba(193, 18, 31, 0.3); /* Button ko bhi bahar shadow diya */
+  color: #fff; 
+  border: none; 
+  border-radius: 12px;
+  padding: 15px; 
+  font-size: 1rem; 
+  font-weight: 800;
+  cursor: pointer; 
+  font-family: 'Nunito', sans-serif;
+  margin-top: 10px; 
+  transition: transform .2s, box-shadow .2s;
+}
+.btn-send:hover { 
+  transform: translateY(-3px); 
+  box-shadow: 0 8px 20px rgba(193, 18, 31, 0.4); 
+}
+.btn-send:active { 
+  transform: translateY(1px); 
+}
+@media (min-width: 768px) {
+  #home .feed-container { max-width: 480px; margin: 0 auto; }
+  .menu-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+  .cat-label { grid-column: 1/-1; }
+  
+}
+
+/* ══════════════════════════════
+    COMMENTS SECTION
+══════════════════════════════ */
+.comment-input-wrap {
+  display: flex;
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  gap: 8px;
+}
+.comment-input-wrap input {
+  flex: 1;
+  border: none;
+  background: none;
+  font-size: 0.85rem;
+  outline: none;
+}
+.cmt-post-btn {
+  background: none;
+  border: none;
+  color: var(--orange);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.feed-video {
+    cursor: pointer; /* Video clickable dikhega */
+}
+
+/* ══════════════════════════════
+    MENU SECTION
+══════════════════════════════ */
+.menu-header {
+  /* background: #f4f4f4;  */
+  background:  #FCF6BA;
+  color: #E5C287;      
+  padding: 50px 24px;
+  text-align: center;
+  border-bottom: 3px solid #E5C287; 
+  box-shadow: inset 0 0 100px rgba(0,0,0,0.2); 
+}
+
+.menu-header h2 { 
+  font-family: 'Cormorant Garamond', serif; 
+  font-size: 2.4rem; 
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.menu-header p { 
+  color: #FFFFFF; 
+  opacity: 0.9; 
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+.menu-body { padding: 16px; }
+.cat-label {
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 1.15rem;
+    color: #B38728; /* Golden Text */
+    margin: 20px 0 10px;
+    padding-left: 10px; 
+    border-left: 3px solid #B38728; /* Golden Border */
+}
+.menu-card {
+  background: var(--white); border-radius: 14px;
+  overflow: hidden; display: flex; align-items: center; gap: 12px;
+  margin-bottom: 12px; box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  transition: transform .2s;
+}
+.menu-card:active { transform: scale(.98); }
+.menu-card img { width: 95px; height: 95px; object-fit: cover; flex-shrink: 0; }
+.mci { flex: 1; padding: 10px 0; }
+.mci h3 { font-size: .92rem; margin-bottom: 3px; }
+.mci p  { font-size: .75rem; color: var(--muted); line-height: 1.5; }
+.mci .price { display: inline-block; margin-top: 5px; background: #fff0e6; color: var(--orange); font-weight: 700; font-size: .8rem; padding: 2px 10px; border-radius: 20px; }
+.mcr { padding-right: 12px; }
+
+/* ══════════════════════════════
+   NEW ADD TO CART UI
+══════════════════════════════ */
+.cart-controls {
+    min-width: 75px;
+    display: flex;
+    justify-content: center;
+}
+/* 
+.add-btn {
+    background: #fff;
+    color: var(--red);
+    border: 1px solid var(--red);
+    border-radius: 8px;
+    padding: 6px 20px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(193, 18, 31, 0.1);
+    transition: all 0.2s;
+    font-family: 'Nunito', sans-serif;
+}
+.add-btn:active { transform: scale(0.95); } */
+
+.add-btn {
+    background: #fff;
+    color: #B38728; /* Golden Text */
+    border: 1px solid #B38728; /* Golden Border */
+    border-radius: 8px;
+    padding: 6px 20px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(179, 135, 40, 0.15); /* Halka golden shadow */
+    transition: all 0.2s;
+    font-family: 'Nunito', sans-serif;
+}
+.add-btn:active { transform: scale(0.95); }
+/* 
+.qty-box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--red);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(193, 18, 31, 0.1);
+}
+
+.qty-btn {
+    background: #fff5f5;
+    color: var(--red);
+    border: none;
+    width: 28px;
+    height: 28px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.qty-btn:active { background: #ffdada; } */
+.qty-box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #B38728; /* Golden Border */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(179, 135, 40, 0.15);
+}
+
+.qty-btn {
+    background: #fdf8e7; /* Bahut light golden background */
+    color: #B38728; /* Golden Icon */
+    border: none;
+    width: 28px;
+    height: 28px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.qty-btn:active { background: #f0e2b6; }
+
+.qty-val {
+    font-size: 0.85rem;
+    font-weight: 800;
+    width: 24px;
+    text-align: center;
+    color: var(--dark);
+    font-family: 'Nunito', sans-serif;
+}
+/* banner boxess */
+.menu-banner-section {
+    display: flex;
+    gap: 20px; 
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    max-width: 1000px; 
+    margin: 0 auto; 
+}
+
+.banner-box1, .banner-box2 {
+    flex: 1;
+    width: 100%;
+}
+
+.banner-box1 img, .banner-box2 img {
+    width: 100%; 
+    height: auto; 
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+    display: block;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .menu-banner-section {
+        flex-direction: column; 
+        gap: 25px; 
+        padding: 15px 20px;
+    }
+    
+    .banner-box1, .banner-box2 {
+        width: 100%;
+        max-width: 400px; 
+    }
+}
+
+/* ══════════════════════════════
+    PAYMENT GATEWAY FORM 
+══════════════════════════════ */
+/* Yahan se purana display:none wala overlay hata diya hai aur sirf orderOverlay ko target kiya hai */
+#orderOverlay {
+    align-items: center; 
+    z-index: 1000;
+}
+
+.order-sheet {
+    background: white;
+    width: 90%; max-width: 400px;
+    padding: 25px; border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: slideUp 0.3s ease-out;
+}
+
+.modal-title { color: #C1121F; margin-bottom: 10px; font-size: 1.4rem; }
+.modal-price { color: #8A6A52; font-weight: bold; }
+
+.order-form input {
+    width: 100%; padding: 12px; margin: 10px 0 20px;
+    border: 1px solid #ddd; border-radius: 10px;
+}
+
+.pay-btn {
+    width: 100%; background: #C1121F; color: white;
+    border: none; padding: 15px; border-radius: 10px;
+    font-weight: bold; cursor: pointer;
+}
+
+.qr-img { width: 220px; border-radius: 10px; margin: 15px 0; border: 4px solid #f9f9f9; }
+
+.wa-confirm-btn {
+    width: 100%; background: #25D366; color: white;
+    border: none; padding: 15px; border-radius: 10px;
+    font-weight: bold; cursor: pointer; margin-top: 10px;
+}
+
+.back-btn {
+    background: none; border: none; color: #777;
+    margin-top: 15px; cursor: pointer; font-size: 0.9rem;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+/* ══════════════════════════════
+    FOOTER SECTION (Fixed for Mobile Nav)
+══════════════════════════════ */
+.footer {
+    background: #1a1a1a;
+    color: var(--white);
+    /* DHYAN DEIN: Bottom mein 100px ki padding di hai taaki Bottom Nav ke piche na chhupe */
+    padding: 50px 20px 100px 20px; 
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column; /* Mobile par teeno columns upar-niche aayenge */
+    gap: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center; /* Mobile par center alignment premium lagti hai */
+}
+
+.footer-col h3, 
+.footer-col h4 {
+    color: var(--orange);
+    margin-bottom: 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+}
+
+.footer-col p {
+    margin: 8px 0;
+    color: #cccccc;
+    font-size: 0.9rem;
+    font-family: 'Nunito', sans-serif;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #333333; /* Ek halki si line copyright ke upar */
+    font-size: 0.8rem;
+    color: #888888;
+}
+
+/* PC/Tablet Layout */
+@media (min-width: 768px) {
+    .footer-container {
+        flex-direction: row; /* PC par wapas 3 columns aamne-samne */
+        text-align: left;
+        justify-content: space-between;
+    }
+    .footer {
+        padding-bottom: 50px; /* PC par Bottom Nav nahi hota, isliye padding kam kardi */
+    }
+}
+
+/* --- X CANCEL BUTTON STYLE --- */
+.close-x {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    z-index: 20;
+    transition: 0.2s;
+}
+.close-x:hover {
+    color: #C1121F; /* Hover karne par Maa-Saheb ka Red color */
+}
+/* map section  */
+.map-container {
+    margin-top: 20px;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 15px;
+}
+
+/* Mobile ke liye thoda adjust */
+@media (max-width: 768px) {
+    .map-container iframe {
+        height: 250px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ══════════════════════════════
+   CART SNACKBAR (VIEW CART)
+══════════════════════════════ */
+.cart-snackbar {
+    position: fixed;
+    /* Bottom nav ki height (58px) + safe area ke theek upar baithayega */
+    bottom: calc(var(--nav-h) + var(--safe-bottom)); 
+    left: 0;
+    right: 0;
+    background: #25D366; /* Premium WhatsApp jaisa Green */
+    color: #fff;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 290; /* Nav bar ke peeche se niklega */
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 15px rgba(37, 211, 102, 0.3);
+    
+    /* Animation ke liye pehle isko niche chupayenge */
+    transform: translateY(100%);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+    pointer-events: none;
+}
+
+.cart-snackbar.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.cart-snack-info {
+    font-size: 0.95rem;
+    font-weight: 800;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.view-cart-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.view-cart-btn svg { transition: transform 0.2s; }
+.view-cart-btn:hover svg { transform: translateX(5px); }
+
+/* ══════════════════════════════
+   ORDER SUMMARY SECTION
+══════════════════════════════ */
+.order-summary-container {
+    margin: 20px 16px 80px 16px; /* Bottom space taaki nav se overlap na ho */
+    background: var(--white);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
+}
+
+.order-summary-container h3 {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--red);
+    margin-bottom: 15px;
+    border-bottom: 2px dashed var(--border);
+    padding-bottom: 10px;
+}
+
+.cart-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.cart-item-info {flex : 1; }
+.cart-item-info h4 { font-size: 0.95rem; color: var(--dark); margin-bottom: 3px; }
+.cart-item-info p { font-size: 0.85rem; color: var(--muted); font-weight: 700; }
+
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.cart-delete-btn {
+    background: #fff5f5;
+    color: var(--red);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.cart-delete-btn:active { background: #ffe3e3; transform: scale(0.9); }
+
+.cart-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--dark);
+}
+
+.place-order-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 15px;
+    font-size: 1rem;
+    font-weight: 800;
+    margin-top: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(193, 18, 31, 0.2);
+    font-family: 'Nunito', sans-serif;
+}
