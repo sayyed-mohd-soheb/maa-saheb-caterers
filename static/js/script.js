@@ -874,7 +874,7 @@ function placeOrder() {
     }
 
     // Build UPI deep link — opens GPay / PhonePe / Paytm / BHIM directly
-    const upiId        = 'sayyedsoheb146@okaxis';
+    const upiId        = '9833759589@ptaxis';
     const merchantName = encodeURIComponent('Maa-Saheb Caterers');
     const note         = encodeURIComponent('Order - Maa-Saheb Caterers');
     const upiDeepLink  = `upi://pay?pa=${upiId}&pn=${merchantName}&am=${amount}&cu=INR&tn=${note}`;
